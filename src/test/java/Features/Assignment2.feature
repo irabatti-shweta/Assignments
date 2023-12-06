@@ -6,3 +6,5 @@ Feature: Dropable
     When Dragged source and dropped to target
     Then Verify Text and color changed
     #Then Verify Text changed to "Dropped!" and color changed to "#777620"
+    
+ 

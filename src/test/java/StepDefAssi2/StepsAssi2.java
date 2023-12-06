@@ -6,9 +6,12 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import net.bytebuddy.agent.builder.AgentBuilder.CircularityLock.Global;
 
+import java.awt.Frame;
+import java.net.ConnectException;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -18,8 +21,9 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Wait;
 
 public class StepsAssi2 {
-	WebDriver driver=new ChromeDriver();	//Created driver
+	static WebDriver driver=new ChromeDriver();	//Created driver
  	String desTextBefore,desText,desColorBefore,desColor; 	//Created variables required
+ 	
 	@Given("Open Chrome browser and navigate to url {string}")	//Function to open browser and navigate to the given url.
 	public void open_chrome_browser_and_navigate_to_url(String url) throws InterruptedException {
 		driver.manage().window().maximize();	//Maximized the window
@@ -37,17 +41,20 @@ public class StepsAssi2 {
 	    System.out.println(desTextBefore);	
 	    desColorBefore=find_color(des);		//Getting color of target before drag and drop operation for comparison
 	    Actions act=new Actions(driver);	//Created an object of action so that function under this can be used
-	    act.dragAndDrop(src, des).build().perform();	//performed drag and drop operation using function available under Actions class
+	    act.dragAndDrop(src, des).perform();	//performed drag and drop operation using function available under Actions class
 	    desText=des.getText();	//Getting text available at target after drag and drop operation for comparison
 	    System.out.println(desText);
 	    desColor=find_color(des);	//Getting color of target after drag and drop operation for comparison 
+	    JavascriptExecutor js = (JavascriptExecutor)driver;
+	    js.executeScript("document.getElementById(\"droppable\").style.backgroundColor = 'RED';");
+	   
+	 
 	}
 
 	@Then("Verify Text and color changed")	//Function to verify text and color changed
-	public void verify_text_and_color_changed() {
+	public void verify_text_and_color_changed() throws ConnectException {
 		//System.out.println(desTextBefore+","+desText+","+desColorBefore+","+desColor);
 		System.out.println(verify_text_and_color(desTextBefore, desText, desColorBefore,desColor));
-		driver.close();
 	} 
 	
 	/*
@@ -69,5 +76,7 @@ public class StepsAssi2 {
 	    desColor=Color.fromString(desColor).asHex();
 		return desColor;
 	}
+	
+	
 	
 }
