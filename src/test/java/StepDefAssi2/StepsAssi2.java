@@ -47,14 +47,13 @@ public class StepsAssi2 {
 	    desColor=find_color(des);	//Getting color of target after drag and drop operation for comparison 
 	    JavascriptExecutor js = (JavascriptExecutor)driver;
 	    js.executeScript("document.getElementById(\"droppable\").style.backgroundColor = 'RED';");
-	   
-	 
 	}
 
 	@Then("Verify Text and color changed")	//Function to verify text and color changed
 	public void verify_text_and_color_changed() throws ConnectException {
 		//System.out.println(desTextBefore+","+desText+","+desColorBefore+","+desColor);
 		System.out.println(verify_text_and_color(desTextBefore, desText, desColorBefore,desColor));
+		driver.close();
 	} 
 	
 	/*
